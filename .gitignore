@@ -1,1 +1,4 @@
-inputGenerator.o*
+inputGenerator.o
+inputGenerator.out
+input.txt
+input2.txt
