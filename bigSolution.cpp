@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <stack>
+#include <cmath>
 
 using namespace std;
 
@@ -20,29 +21,45 @@ void buildGraph(map<int, vector<int> >& g, int& gSize, string file){
     }
 }
 
-void findCycles(map<int, vector<int> >& g, vector<vector<int> >& cycles, vector<int>& path, vector<bool>& visited, int curr){
-    visited[curr] = true;
-        path.push_back(curr+1);
-        for (int u : g[curr]) {
-            if (!visited[u-1]) {
-                findCycles(g, cycles, path, visited,u-1);
-            } else {
-                // Found a cycle
-                if (find(path.begin(), path.end(), u) != path.end()) {
-                    vector<int> cycle;
-                    auto it = find(path.begin(), path.end(), u);
-                    for (; it != path.end(); ++it) {
-                        cycle.push_back(*it);
-                        if (*it == u) break;
-                    }
-                    cycles.push_back(cycle);
-                }
+void strongconnect(int v, int& index, map<int, vector<int> >& g, vector<vector<int> >& cycles, vector<int>& path, vector<bool>& visited, vector<int>& indices, vector<int>& lowlink, stack<int>& s){
+    indices[v] = index;
+    lowlink[v] = index;
+    index++;
+    s.push(v);
+    visited[v] = true;
+    for(int i = 0; i < g[v].size(); i++){
+        if(indices[g[v][i]] == -1){
+            strongconnect(g[v][i], index, g, cycles, path, visited, indices, lowlink, s);
+            lowlink[v] = min(lowlink[v], lowlink[g[v][i]]);
+        }else if(visited[g[v][i]]){
+            lowlink[v] = min(lowlink[v], indices[g[v][i]]);
+        }
+    }
+    if(lowlink[v] == indices[v]){
+        vector<int> cycle;
+        while(true){
+            int w = s.top();
+            s.pop();
+            visited[w] = false;
+            cycle.push_back(w+1);
+            if(w == v){
+                break;
             }
         }
+        cycles.push_back(cycle);
+    }
+}
 
-        // Backtrack
-        path.pop_back();
-        visited[curr] = false;
+void findCycles(map<int, vector<int> >& g, vector<vector<int> >& cycles, vector<int>& path, vector<bool>& visited, int gSize){
+    int index = 0;
+    stack<int> s;
+    vector<int> indices(gSize, -1);
+    vector<int> lowlink(gSize, -1);
+    for(int v = 0; v < gSize; v++){
+        if(indices[v] == -1){
+            strongconnect(v, index, g, cycles, path, visited, indices, lowlink, s);
+        }
+    }
 }
 
 int main(int argc, char* argv[]){
@@ -52,11 +69,7 @@ int main(int argc, char* argv[]){
     vector< vector<int> > cycles;
     vector<bool> visited(gSize, false);
     vector<int> path;
-    for(int i = 0; i < gSize; i++){
-        if(!visited[i]){
-            findCycles(g, cycles, path, visited, i);
-        }
-    }
+    findCycles(g, cycles, path, visited, gSize);
 
     for(int i = 0; i < cycles.size(); i++){
         for(int j = 0; j < cycles[i].size(); j++){
