@@ -1,5 +1,5 @@
 import networkx as nx
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 class DigraphProcessor:
 
@@ -58,7 +58,7 @@ class DigraphProcessor:
     
 if __name__ == "__main__":
 
-    file_path = "input4.txt"
+    file_path = "two_test.txt"
     processor = DigraphProcessor(file_path)
     print(f"SOLUTION: {processor.generate_solution_optimal_case()}")
 
