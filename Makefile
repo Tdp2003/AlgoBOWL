@@ -1,8 +1,8 @@
 # A line starting with a has is a comment, we'll build up
 # the below example
 
-TARGET = inputGenerator.out
-SRC_FILES = inputGenerator.cpp
+TARGET = bigSolution.out
+SRC_FILES = bigSolution.cpp
 
 # DO NOT EDIT BELOW HERE
 CXX = g++
