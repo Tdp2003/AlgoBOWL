@@ -1,8 +1,8 @@
 # A line starting with a has is a comment, we'll build up
 # the below example
 
-TARGET = traversal.out
-SRC_FILES = traversal.cpp
+TARGET = bigSolution.out
+SRC_FILES = bigSolution.cpp
 
 # DO NOT EDIT BELOW HERE
 CXX = g++

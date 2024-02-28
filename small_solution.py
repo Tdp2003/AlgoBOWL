@@ -58,7 +58,7 @@ class DigraphProcessor:
     
 if __name__ == "__main__":
 
-    file_path = "two_test.txt"
+    file_path = "./inputs/input_group725.txt"
     processor = DigraphProcessor(file_path)
     print(f"SOLUTION: {processor.generate_solution_optimal_case()}")
 
