@@ -36,7 +36,7 @@ class DigraphProcessor:
 
 if __name__ == "__main__":
     #Inputs that we already have optimized output for before using newSol: 729, 742, 746, 754, 765, 774, 778, 780, 781, 784, 790, 791, 797
-    file_path = "./inputs/input_group721.txt"# Update this path as needed
+    file_path = "./inputs/input_group796.txt"# Update this path as needed
     processor = DigraphProcessor(file_path)
     removed_nodes = processor.generate_solution()
     with open("output.txt", "w") as f:
